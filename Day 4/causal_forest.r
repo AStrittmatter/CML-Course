@@ -52,6 +52,7 @@ corrplot(corr, type = "upper", tl.col = "black")
 ######################################################################
 
 ########################  Partition the Samples  ########################
+set.seed(100239) # set starting value for random number generator
 
 # Partition Hold-Out-Sample
 df_part <- modelr::resample_partition(df, c(obs = 0.8, hold_out = 0.2))
