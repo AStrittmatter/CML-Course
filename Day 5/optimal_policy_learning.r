@@ -14,7 +14,6 @@ print('All packages successfully installed and loaded.')
 ###################################################################
 
 ########################  Load Data Frame  ########################
-#set.seed(100239) # set starting value for random number generator
 
 # Load data frame
 df <- read.csv("fundraising.csv",header=TRUE, sep=",")
@@ -30,7 +29,6 @@ covariates <- c("amount_pre", "amount_lastpre", "amount_maxpre", "H_number_yearb
                 "H_littleask", "H_bigask", "H_nyears", "H_frequency", "H_medinc", "H_medinc_mdum",
                 "H_Avg_years_ed", "H_Avg_years_ed_mdum")
 
-    
 all_variables <- c(outcome, treatment, covariates)
 
 print('Data frame successfully loaded and sample selected.')
@@ -38,6 +36,7 @@ print('Data frame successfully loaded and sample selected.')
 ######################################################################
 
 ########################  Table with Descriptive Statistics  ########################
+
 desc <- fBasics::basicStats(df) %>% t() %>% as.data.frame() %>% 
   select(Mean, Stdev, Minimum, Maximum, nobs)
 print(round(desc, digits=2))
@@ -250,14 +249,13 @@ pi_tree1_hold_out = as.matrix(predict(tree_1, newdata=covariates_hold_out))
 ####################################################################################
 
 #############################  Build Trees Deeper Tree  #################################                         
-## Note: Asymptotic results hold only for trees with little complexity
+
 set.seed(1234567)
-#set.seed(100235)
 
 # Tree 
 tree_2 <- rpart(formula = linear, # Predict sign of treatment
                 data = df_obs,
-                weights = lambda,  # Larger effect --> Higher weight
+                weights = lambda,  # Larger absolute effect --> Higher weight
                 method = "class",
                 control = rpart.control(cp = 2.00e-10, minbucket=10))
 
@@ -281,7 +279,7 @@ prune_tree_2 <- prune(tree_2, cp = cp.vals_2)
 rpart.plot(prune_tree_2,digits=3, main = "Pruned Tree")
 
 # Predict policy rule to hold-out-sample
-pi_tree2_hold_out = as.matrix(predict(tree_2, newdata=covariates_hold_out))
+pi_tree2_hold_out = as.matrix(predict(prune_tree_2, newdata=covariates_hold_out))
 
 #########################################################################################
 
