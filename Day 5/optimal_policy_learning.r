@@ -329,11 +329,11 @@ tree_all <- round(mean((rule_tree_2-1)*Y_star_hold_out), digits = 2)
 se_tree_all <- round(sqrt(var((rule_tree_2-1)*Y_star_hold_out)/length(Y_star_hold_out)), digits = 2)
 
 print('Total Policy Value Compared to Everybody is Treated')
-print(paste0("Average Gain of Pruned Tree: ", R1_tree_all))
+print(paste0("Average Gain of Pruned Tree: ", tree_all))
 print(paste0("Standard Error: ", se_tree_all))
 
-round(mean(giving_hold_out[treat_hold_out==1,]), digits = 2)
-round(mean((rule_tree_2-1)*Y_star_hold_out)/mean(giving_hold_out[treat_hold_out==1,]), digits = 2)
+#round(mean(giving_hold_out[treat_hold_out==1,]), digits = 2)
+#round(mean((rule_tree_2-1)*Y_star_hold_out)/mean(giving_hold_out[treat_hold_out==1,]), digits = 2)
 
 ################################################################################################
 
@@ -344,12 +344,11 @@ tree_no <- round(mean(rule_tree_2*Y_star_hold_out), digits = 2)
 se_tree_no <- round(sqrt(var(rule_tree_2*Y_star_hold_out)/length(Y_star_hold_out)), digits = 2)
 
 print('Total Policy Value Compared to Nobody is Treated')
-print(paste0("Average Gain of Pruned Tree: ", R1_tree_no))
+print(paste0("Average Gain of Pruned Tree: ", tree_no))
 print(paste0("Standard Error: ", se_tree_no))
 
-
-round(mean(giving_hold_out[treat_hold_out==0,]), digits = 2)
-round(mean(rule_tree_2*Y_star_hold_out)/mean(giving_hold_out[treat_hold_out==0,]), digits = 2)
+#round(mean(giving_hold_out[treat_hold_out==0,]), digits = 2)
+#round(mean(rule_tree_2*Y_star_hold_out)/mean(giving_hold_out[treat_hold_out==0,]), digits = 2)
 
 ################################################################################################
 
@@ -364,9 +363,9 @@ print('Total Policy Value Compared to Random Assignment')
 print(paste0("Average Gain of Pruned Tree: ", R1_tree_2))
 print(paste0("Standard Error: ", se_tree_2))
 
-round((mean(giving_hold_out[treat_hold_out==1,])+mean(giving_hold_out[treat_hold_out==0,]))/2, digits = 2)
-round(1/2*mean((2*rule_tree_2-1)*Y_star_hold_out)/(mean(giving_hold_out[treat_hold_out==1,])+
-                                                   mean(giving_hold_out[treat_hold_out==0,]))/2, digits = 2)
+#round((mean(giving_hold_out[treat_hold_out==1,])+mean(giving_hold_out[treat_hold_out==0,]))/2, digits = 2)
+#round(1/2*mean((2*rule_tree_2-1)*Y_star_hold_out)/(mean(giving_hold_out[treat_hold_out==1,])+
+#                                                   mean(giving_hold_out[treat_hold_out==0,]))/2, digits = 2)
 
 ################################################################################################
 
