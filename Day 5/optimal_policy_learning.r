@@ -51,7 +51,7 @@ corrplot(corr, type = "upper", tl.col = "black")
 ######################################################################
 
 ########################  Partition the Samples  ########################
-set.seed(100239) # set starting value for random number generator
+set.seed(100233) # set starting value for random number generator
 
 # Partition Hold-Out-Sample
 df_part <- modelr::resample_partition(df, c(obs = 0.8, hold_out = 0.2))
@@ -104,7 +104,7 @@ print('The data is now ready for your analysis!')
 ###########################################################################
 
 ########################  Potential Outcomes  ######################## 
-set.seed(100244)
+set.seed(100243)
 
 # Tuning parameters
 min_tree = 20
@@ -165,7 +165,7 @@ print("Potential outcomes are estimated")
 ###########################################################################
 
 ########################  Propensity Score  ######################## 
-set.seed(100243)
+set.seed(100242)
 
 # Tuning parameters
 min_tree = 20
@@ -261,7 +261,7 @@ tree_2 <- rpart(formula = linear, # Predict sign of treatment
 
 # Find optimal tree sizes
 op.index_2 <- which.min(tree_2$cptable[, "xerror"])
-print(paste0("Optimal number of splits: ", op.index_2))
+print(paste0("Optimal number of splits: ", tree_2$cptable[op.index_2, "nsplit"]))
 
 # Plot CV-Error 
 plotcp(tree_2, minline = TRUE)
@@ -286,9 +286,9 @@ pi_tree2_hold_out = as.matrix(predict(prune_tree_2, newdata=covariates_hold_out)
 ########################  Share of Treated  ######################## 
 
 # Rule based on shallow tree (ITR1)
-rule_tree_1 <- as.numeric(pi_tree1_hold_out[,1]> .5)
+rule_tree_1 <- as.numeric(pi_tree1_hold_out[,2]> .5)
 # Rule based on deeper tree (ITR2)
-rule_tree_2 <- as.numeric(pi_tree2_hold_out[,1] > .5)
+rule_tree_2 <- as.numeric(pi_tree2_hold_out[,2]> .5)
                   
 print('Descriptives of Policy Rules')
 desc <- fBasics::basicStats(cbind(rule_tree_1,rule_tree_2)) %>% t() %>% as.data.frame() %>% 
